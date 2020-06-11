@@ -9,8 +9,38 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var inputNumber = ""
+    @State private var inputUnit = 0
+    @State private var outputUnit = 0
+    
+    let distanceUnits = ["meters", "kilometers", "feet", "yard", "miles"]
+    
     var body: some View {
-        Text("Hello, World!")
+        NavigationView {
+            Form {
+                Section(header: Text("Input Measure")) {
+                    TextField("Measure", text: $inputNumber)
+                        .keyboardType(.decimalPad)
+                    
+                    Picker("Input Unit", selection: $inputUnit) {
+                        ForEach(0 ..< distanceUnits.count) {
+                            Text("\(self.distanceUnits[$0])")
+                        }
+                    }
+                    .pickerStyle(SegmentedPickerStyle())
+                }
+                
+                Section(header: Text("Output  Measure")) {
+                    Picker("Output Unit", selection: $outputUnit) {
+                        ForEach(0 ..< distanceUnits.count) {
+                            Text("\(self.distanceUnits[$0])")
+                        }
+                    }
+                    .pickerStyle(SegmentedPickerStyle())
+                }
+            }
+            .navigationBarTitle("Unit Converter")
+        }
     }
 }
 
