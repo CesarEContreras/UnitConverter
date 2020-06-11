@@ -84,7 +84,7 @@ struct ContentView: View {
                 }
                 
                 Section(header: Text("Output Measure")) {
-                    Text("\(outputNumber, specifier: "%.2f")")
+                    Text("\(outputNumber, specifier: "%.4f")")
                 }
             }
             .navigationBarTitle("Unit Converter")
