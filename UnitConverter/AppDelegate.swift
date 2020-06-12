@@ -8,6 +8,9 @@
 
 import UIKit
 import CoreData
+import AppCenter
+import AppCenterAnalytics
+import AppCenterCrashes
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,6 +19,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        if let fileUrl = Bundle.main.url(forResource: "AppCenter-Config", withExtension: "plist"),
+           let data = try? Data(contentsOf: fileUrl) {
+               if let result = try? PropertyListSerialization.propertyList(from: data, options: [], format: nil) as? [String: String] {
+                MSAppCenter.start(result["AppSecret"], withServices:[
+                      MSAnalytics.self,
+                      MSCrashes.self
+                    ])
+               }
+        }
+        
         return true
     }
 
